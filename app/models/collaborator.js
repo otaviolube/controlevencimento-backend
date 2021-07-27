@@ -27,7 +27,6 @@ collaborator.prototype.cadastrar = function(dado) {
     return this._Collaborator.create({
             collaborator: dado.collaborator,
             phone: dado.phone,
-            cellphone: dado.cellphone,
             email: dado.email,
             permission: dado.permission,
             createdAt: data,
@@ -45,7 +44,6 @@ collaborator.prototype.atualizar = function(dado) {
     return this._Collaborator.update({
         collaborator: dado.collaborator,
         phone: dado.phone,
-        cellphone: dado.cellphone,
         email: dado.email,
         permission: dado.permission,
         createdAt: data,

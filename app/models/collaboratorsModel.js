@@ -8,9 +8,6 @@ module.exports.collaboratorsModel = function(connection){
         phone: {
             type: sequelize.STRING,
         },
-        cellphone: {
-            type: sequelize.STRING,
-        },
         email: {
             type: sequelize.STRING,
         },
