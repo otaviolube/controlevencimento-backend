@@ -48,7 +48,6 @@ module.exports.atualizar = async function(app, req, res) {
 
     var companysModel = new app.app.models.company(app, connection);
     var cadastro = req.body;
-    console.log(cadastro);
     var empresas = await companysModel.atualizar(cadastro)
 
     res.json({
@@ -57,25 +56,37 @@ module.exports.atualizar = async function(app, req, res) {
     })
 }
 
+
 module.exports.deletar = async function(app, req, res) {
     var connection = app.config.dbConnection();
+    var contractModel = new app.app.models.contract(app, connection);
 
     var companysModel = new app.app.models.company(app, connection);
     var id = req.params.id;
 
-    var empresas = await companysModel.deletar(id)
 
-    res.json({
-        status: "OK",
-        empresas: empresas
-    })
+    var validar = await contractModel.getcompanyId(id)
+    if(validar.length == 0){
+        var empresas = await companysModel.deletar(id)
+    
+        res.json({
+            status: "Registro apagado com sucesso!",
+            message: 'message.sucesso',
+            empresas: empresas
+        })
+    }else{
+        res.json({
+            status: "Este dado está vinculado a um Contrato.",
+            message:'message.erro'
+        })
+    }
 }
+
 
 module.exports.cadastrar = async function(app, req, res) {
     var connection = app.config.dbConnection();
 
     var companysModel = new app.app.models.company(app, connection);
-    console.log("",req.body);
     var cadastro = req.body;
 
     var empresas = await companysModel.cadastrar(cadastro)

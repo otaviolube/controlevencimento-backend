@@ -5,7 +5,24 @@ function company(app, connection) {
 }
 
 company.prototype.get = function() {
-    return this._Company.findAll()
+    return this._Company.findAll({
+        order: [
+            ['name']
+        ]
+    }).then(function(empresas) {
+        return JSON.parse(JSON.stringify(empresas, null, 4));
+    }).error(function(err) {
+        return ('error');
+    });
+}
+
+company.prototype.getAtivo = function() {
+    return this._Company.findAll({
+            order: [
+                ['name']
+            ],
+            where: { situation: 1 }
+        })
         .then(function(empresas) {
             return JSON.parse(JSON.stringify(empresas, null, 4));
         }).error(function(err) {
@@ -13,15 +30,16 @@ company.prototype.get = function() {
         });
 }
 
-company.prototype.getAtivo = function() {
+company.prototype.getStatus = function() {
     return this._Company.findAll({
-        where: {situation:1}
-    })
-        .then(function(empresas) {
-            return JSON.parse(JSON.stringify(empresas, null, 4));
-        }).error(function(err) {
-            return ('error');
-        });
+        where: {
+            status: 1
+        }
+    }).then(function(empresas) {
+        return JSON.parse(JSON.stringify(empresas, null, 4));
+    }).error(function(err) {
+        return ('error');
+    });
 }
 
 company.prototype.getId = function(id) {

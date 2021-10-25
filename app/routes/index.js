@@ -81,26 +81,83 @@ app.delete('/colaborador/:id', function(req, res) {
     app.app.controllers.collaboratorController.deletar(app, req, res);
 });
 
-   // Rotas Tipos Item
+   // Rotas  Área
 
-   app.get('/tipoItem', function(req, res) {
-    app.app.controllers.itemtypeController.lerTipoItem(app, req, res);
+   app.get('/areaAtivo', function(req, res) {
+    app.app.controllers.areaController.lerAreaAtivo(app, req, res);
 });
 
-app.get('/idtipoItem/:id', function(req, res) {
-    app.app.controllers.itemtypeController.idTipoItem(app, req, res);
+   app.get('/area', function(req, res) {
+    app.app.controllers.areaController.lerArea(app, req, res);
 });
 
-app.post('/tipoItem', function(req, res) {
-    app.app.controllers.itemtypeController.cadastrar(app, req, res);
+app.get('/idArea/:id', function(req, res) {
+    app.app.controllers.areaController.idArea(app, req, res);
 });
 
-app.patch('/tipoItem', function(req, res) {
-    app.app.controllers.itemtypeController.atualizar(app, req, res);
+app.post('/area', function(req, res) {
+    app.app.controllers.areaController.cadastrar(app, req, res);
 });
 
-app.delete('/tipoItem/:id', function(req, res) {
-    app.app.controllers.itemtypeController.deletar(app, req, res);
+app.patch('/area', function(req, res) {
+    app.app.controllers.areaController.atualizar(app, req, res);
+});
+
+app.delete('/area/:id', function(req, res) {
+    app.app.controllers.areaController.deletar(app, req, res);
+});
+
+ // Rotas  Item
+
+ app.get('/itemAtivo', function(req, res) {
+    app.app.controllers.itemController.lerItemAtivo(app, req, res);
+});
+
+ app.get('/item', function(req, res) {
+    app.app.controllers.itemController.lerItem(app, req, res);
+});
+
+app.get('/idItem/:id', function(req, res) {
+    app.app.controllers.itemController.idItem(app, req, res);
+});
+
+app.post('/item', function(req, res) {
+    app.app.controllers.itemController.cadastrar(app, req, res);
+});
+
+app.patch('/item', function(req, res) {
+    app.app.controllers.itemController.atualizar(app, req, res);
+});
+
+app.delete('/item/:id', function(req, res) {
+    app.app.controllers.itemController.deletar(app, req, res);
+});
+
+
+  // Rotas SubItem 
+
+  app.get('/subitemAtivo', function(req, res) {
+    app.app.controllers.subItemController.lerSubitemAtivo(app, req, res);
+});
+
+  app.get('/subitem', function(req, res) {
+    app.app.controllers.subItemController.lerSubItem(app, req, res);
+});
+
+app.get('/idsubitem/:id', function(req, res) {
+    app.app.controllers.subItemController.idSubItem(app, req, res);
+});
+
+app.post('/subitem', function(req, res) {
+    app.app.controllers.subItemController.cadastrar(app, req, res);
+});
+
+app.patch('/subitem', function(req, res) {
+    app.app.controllers.subItemController.atualizar(app, req, res);
+});
+
+app.delete('/subitem/:id', function(req, res) {
+    app.app.controllers.subItemController.deletar(app, req, res);
 });
 
  // Rotas Empresa
@@ -128,5 +185,51 @@ app.patch('/empresa', function(req, res) {
 app.delete('/empresa/:id', function(req, res) {
     app.app.controllers.companyController.deletar(app, req, res);
 });
+
+
+ // Rotas Controle Colaborador
+
+app.get('/controlColaborador', function(req, res) {
+    app.app.controllers.controlcollaboratorController.lerControleColaborador(app, req, res);
+});
+
+app.get('/idcontrolColaborador/:id', function(req, res) {
+    app.app.controllers.controlcollaboratorController.idControleColaborador(app, req, res);
+});
+
+app.post('/controlColaborador', function(req, res) {
+    app.app.controllers.controlcollaboratorController.cadastrar(app, req, res);
+});
+
+app.patch('/controlColaborador', function(req, res) {
+    app.app.controllers.controlcollaboratorController.atualizar(app, req, res);
+});
+
+app.delete('/controlColaborador/:id', function(req, res) {
+    app.app.controllers.controlcollaboratorController.deletar(app, req, res);
+});
+
+ // Rotas Controle Empresa
+
+ app.get('/controlEmpresa', function(req, res) {
+    app.app.controllers.controlCompanysController.lerControleEmpresa(app, req, res);
+});
+
+app.get('/idcontrolEmpresa/:id', function(req, res) {
+    app.app.controllers.controlCompanysController.idControleEmpresa(app, req, res);
+});
+
+app.post('/controlEmpresa', function(req, res) {
+    app.app.controllers.controlCompanysController.cadastrar(app, req, res);
+});
+
+app.patch('/controlEmpresa', function(req, res) {
+    app.app.controllers.controlCompanysController.atualizar(app, req, res);
+});
+
+app.delete('/controlEmpresa/:id', function(req, res) {
+    app.app.controllers.controlCompanysController.deletar(app, req, res);
+});
+
 
 }

@@ -5959,7 +5959,7 @@ function getWidthOrHeight( elem, name, extra ) {
 	// Support: IE11 only
 	// In IE 11 fullscreen elements inside of an iframe have
 	// 100x too small dimensions (gh-1764).
-	if ( document.msFullscreenElement && window.top !== window ) {
+	 if ( document.msFullscreenElement && window.top !== window ) { 
 
 		// Support: IE11 only
 		// Running getBoundingClientRect on a disconnected node

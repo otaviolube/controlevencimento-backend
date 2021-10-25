@@ -29,6 +29,15 @@ contract.prototype.getId = function(id) {
         });
 }
 
+contract.prototype.getcompanyId = function(id) {
+    return this._Contract.findAll( { where: { companyId: id } })
+        .then(function(contratos) {
+            return JSON.parse(JSON.stringify(contratos, null, 4));
+        }).error(function(err) {
+            return ('error');
+        });
+}
+
 contract.prototype.cadastrar = function(dado) {
     var data = new Date();
     return this._Contract.create({
@@ -38,7 +47,7 @@ contract.prototype.cadastrar = function(dado) {
         administrator: dado.administrator,
         situation: dado.situation,
         createdAt: data,
-        updatedAt: data
+        updatedAt: data,
 
         })
         .then(function(contratos) {
@@ -57,7 +66,7 @@ contract.prototype.atualizar = function(dado) {
         administrator: dado.administrator,
         situation: dado.situation,
         createdAt: data,
-        updatedAt: data
+        updatedAt: data,
 
         }, { where: { id: dado.id } })
         .then(function(contratos) {

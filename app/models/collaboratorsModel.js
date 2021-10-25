@@ -2,6 +2,9 @@ module.exports.collaboratorsModel = function(connection){
 	var sequelize = require('sequelize');
 
 	return connection.define('collaborators', {
+        companyId: {
+            type: sequelize.INTEGER,
+        },
         collaborator: {
             type: sequelize.STRING,
         },

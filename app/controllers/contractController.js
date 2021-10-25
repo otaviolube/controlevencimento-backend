@@ -1,4 +1,3 @@
-
 module.exports.idContrato = async function(app, req, res) {
     var connection = app.config.dbConnection();
  
@@ -35,7 +34,6 @@ module.exports.cadastrar = async function(app, req, res) {
     var connection = app.config.dbConnection();
 
     var contractModel = new app.app.models.contract(app, connection);
-    console.log("",req.body);
     var cadastro = req.body;
 
     var contratos = await contractModel.cadastrar(cadastro)
@@ -72,4 +70,4 @@ module.exports.deletar = async function(app, req, res) {
         status: "OK",
         contratos: contratos
     })
-}
+} 
