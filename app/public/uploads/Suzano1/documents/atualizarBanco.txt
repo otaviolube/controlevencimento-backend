@@ -1,1 +1,0 @@
-ALTER TABLE frete ADD COLUMN valor_carga FLOAT ;
