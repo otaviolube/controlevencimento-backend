@@ -1,9 +1,3 @@
-const express = require('express');
+const app = require('./app');
 
-const app = express();
-
-app.use(express.json());
-
-app.get('/', (req, res) => res.status(200).json({msg: 'ok'}));
-
-app.listen(3000);
+app.listen(process.env.PORT, () => console.log(`Servidor operacional na porta ${process.env.PORT}`));
