@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mysql_prod:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: compet
+      MYSQL_DATABASE: controle_vencimentos_prod
+    ports:
+      - 3306:3306
+  mysql_dev:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: compet
+      MYSQL_DATABASE: controle_vencimentos_dev
+    ports:
+      - 3307:3306
+  
