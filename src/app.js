@@ -22,7 +22,7 @@ class AppController {
     }
 
     routes(){
-
+        require('./app/routes')(this.express);
     }
 }
 
