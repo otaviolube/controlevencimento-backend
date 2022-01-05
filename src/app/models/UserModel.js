@@ -11,7 +11,7 @@ class UserModel extends Model {
             user_password: DataTypes.STRING,
             user_email: DataTypes.STRING,
             user_login: DataTypes.STRING,
-            user_imagem: DataTypes.STRING,
+            user_image: DataTypes.STRING,
             user_type: DataTypes.STRING,
             user_status: DataTypes.STRING
         }, {
