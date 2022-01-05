@@ -14,11 +14,11 @@ class AppController {
     }
 
     database(){
-
+        require('./database');
     }
 
     middlewares(){
-
+        this.express.use(express.json());
     }
 
     routes(){

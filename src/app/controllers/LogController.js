@@ -9,6 +9,10 @@ class LogController {
 
     }
 
+    createLog(req, res){
+        
+    }
+
 }
 
 module.exports = new LogController();

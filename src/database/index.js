@@ -8,6 +8,7 @@ const connection = new Sequelize(dbConfig);
 
 UserModel.init(connection);
 LogModel.init(connection);
-LogModel.associations(connection.models);
+
+LogModel.associate(connection.models);
 
 module.exports = connection;

@@ -1,9 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
 
 class UserModel extends Model {
-    static int(sequelize){
+    static init(sequelize){
         super.init({
-            user_id: DataTypes.UUID,
+            user_id: {
+                type: DataTypes.UUID,
+                primaryKey: true
+            },
             user_name: DataTypes.STRING,
             user_password: DataTypes.STRING,
             user_email: DataTypes.STRING,

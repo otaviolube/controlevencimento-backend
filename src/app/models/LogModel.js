@@ -10,8 +10,8 @@ class LogModel extends Model {
         });
     }
 
-    static associations(models){
-        this.belongsTo(models.user, { foreignKey: 'user_id', as: 'user_id'});
+    static associate(models){
+        this.belongsTo(models.UserModel, { foreignKey: 'user_id', as: 'log_user_id'});
     }
 }
 
