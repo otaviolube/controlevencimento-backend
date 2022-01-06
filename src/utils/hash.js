@@ -12,7 +12,7 @@ const generateHash = async (password) => {
 }
 
 const validateHash = async (hash, password) => {
-    return await bcrypt.compare(hash, password);
+    return await bcrypt.compare(password, hash);
 }
 
 module.exports = { generateHash, validateHash };
