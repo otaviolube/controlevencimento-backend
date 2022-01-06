@@ -4,5 +4,5 @@ require('dotenv').config({
 
 module.exports = {
     "secret": process.env.SECRET,
-    "toker_expiration": process.env.TOKEN_EXPIRATION
+    "token_expiration": process.env.TOKEN_EXPIRATION
 }
