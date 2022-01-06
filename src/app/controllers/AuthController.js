@@ -1,6 +1,7 @@
 const UserModel = require('../models/UserModel');
 const { Op } = require('sequelize');
 const { validateHash } = require('../../utils/hash');
+const generateToken = require('../../utils/jwt');
 
 class AuthController {
     async login(req, res) {
@@ -33,6 +34,13 @@ class AuthController {
                     console.log('Usuário autenticado com sucesso');
                     res.status(200).json({
                         msg: "Usuário autenticado",
+                        token: generateToken({
+                            user_email: user.user_email,
+                            user_login: user.user_login,
+                            user_status: user.user_status,
+                            user_type: user.user_type,
+                            user_name: user.user_name
+                        })
                     });
                 } else {
                     console.log('Erro na autenticação do usuário');
