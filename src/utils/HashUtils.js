@@ -1,8 +1,11 @@
-const bcrypt = require('bcrypt');
+require('dotenv').config({
+    path: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env'
+});
 
+const bcrypt = require('bcrypt');
 class HashUtils {
     constructor(){
-        this.saltRonds = 10;
+        this.saltRonds = parseInt(process.env.SALT_ROUNDS);
     }
 
      async generateHash(password) {
