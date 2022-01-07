@@ -1,6 +1,6 @@
 const UserModel = require('../models/UserModel');
 const { v4: uuidv4 } = require('uuid');
-const { generateHash } = require('../../utils/hash');
+const HashUtils = require('../../utils/HashUtils');
 class UserController {
     async createUser(req, res) {
         const {
@@ -11,7 +11,7 @@ class UserController {
             user_type,
             user_status } = req.body;
 
-        const user_password_hash = await generateHash(user_password);
+        const user_password_hash = await HashUtils.generateHash(user_password);
 
         try {
             const usersNumber = await UserModel.count({
@@ -19,8 +19,6 @@ class UserController {
                     user_email
                 }
             });
-
-            console.log(usersNumber);
 
             if (usersNumber > 0) {
                 return res.status(401).json({
@@ -41,12 +39,12 @@ class UserController {
             return res.status(200).json({
                 msg: 'Usuário inserido com sucesso!',
                 user: {
-                    user_id,
-                    user_name,
-                    user_email,
-                    user_login,
-                    user_type,
-                    user_status
+                    user_id: user.user_id,
+                    user_name: user.user_name,
+                    user_email: user.user_email,
+                    user_login: user.user_login,
+                    user_type: user.user_type,
+                    user_status: user.user_status
                 }
             });
         } catch (error) {
@@ -115,7 +113,7 @@ class UserController {
             
             const user_new_data = req.body;
 
-            const new_user = await UserModel.update({
+            await UserModel.update({
                 user_id: user_new_data.user_id,
                 user_name: user_new_data.user_name,
                 user_email: user_new_data.user_email,

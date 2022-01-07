@@ -14,7 +14,7 @@ class AppController {
     }
 
     database(){
-        require('./database');
+        require('./database/_index');
     }
 
     middlewares(){
@@ -22,7 +22,7 @@ class AppController {
     }
 
     routes(){
-        require('./app/routes')(this.express);
+        require('./app/routes/_index')(this.express);
     }
 }
 
