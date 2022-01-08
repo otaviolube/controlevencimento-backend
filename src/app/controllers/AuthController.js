@@ -35,6 +35,7 @@ class AuthController {
                     res.status(200).json({
                         msg: "Usuário autenticado",
                         token: JwtUtils.generateToken({
+                            user_id: user.user_id,
                             user_email: user.user_email,
                             user_login: user.user_login,
                             user_status: user.user_status,

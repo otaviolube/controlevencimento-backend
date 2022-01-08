@@ -2,6 +2,8 @@ const UserModel = require('../models/UserModel');
 const { v4: uuidv4 } = require('uuid');
 const HashUtils = require('../../utils/HashUtils');
 const BucketService = require('../../services/BucketService');
+const sharp = require('sharp');
+
 class UserController {
     async createUser(req, res) {
         const {
@@ -59,22 +61,33 @@ class UserController {
     async showUser(req, res) {
         const user_id = req.params.id;
 
-        try{
+        try {
             const user = await UserModel.findOne({
                 where: {
                     user_id: user_id
                 }
             });
-            if(!user){
+            if (!user) {
                 return res.status(400).json({
                     msg: "ID de usuário não encontrado"
                 });
             }
+            const usersData = {
+                user_id: user.user_id,
+                user_name: user.user_name,
+                user_email: user.user_email,
+                user_login: user.user_login,
+                user_image: user.user_image,
+                user_type: user.user_type,
+                user_status: user.user_status,
+                created_at: user.createdAt,
+                updated_at: user.updatedAt
+            }
             return res.status(200).json({
                 msg: "Usuário encontrado com sucesso.",
-                users: user
+                users: usersData
             });
-        }catch(error){
+        } catch (error) {
             console.log(error);
             return res.status(400).json({
                 error: error.message
@@ -83,13 +96,26 @@ class UserController {
     }
 
     async listUsers(req, res) {
-        try{
+        try {
             const users = await UserModel.findAll();
+            const usersData = users.map(user => {
+                return {
+                    user_id: user.user_id,
+                    user_name: user.user_name,
+                    user_email: user.user_email,
+                    user_login: user.user_login,
+                    user_image: user.user_image,
+                    user_type: user.user_type,
+                    user_status: user.user_status,
+                    created_at: user.createdAt,
+                    updated_at: user.updatedAt
+                }
+            });
             return res.status(200).json({
                 msg: "Usuários coletados com sucesso.",
-                users: users
+                users: usersData
             });
-        }catch(error){
+        } catch (error) {
             console.log(error);
             return res.status(400).json({
                 error: error.message
@@ -100,18 +126,18 @@ class UserController {
     async changeUser(req, res) {
         const user_id = req.params.id;
 
-        try{
+        try {
             const user = await UserModel.findOne({
                 where: {
                     user_id: user_id
                 }
             });
-            if(!user){
+            if (!user) {
                 return res.status(400).json({
                     msg: "ID de usuário não encontrado"
                 });
             }
-            
+
             const user_new_data = req.body;
 
             await UserModel.update({
@@ -131,7 +157,7 @@ class UserController {
                 msg: 'Usuário atualizado com sucesso!'
             });
 
-        }catch(error){
+        } catch (error) {
             console.log(error);
             return res.status(400).json({
                 error: error.message
@@ -142,25 +168,25 @@ class UserController {
     async deleteUser(req, res) {
         const user_id = req.params.id;
 
-        try{
+        try {
             const user = await UserModel.findOne({
                 where: {
                     user_id: user_id
                 }
             });
-            if(!user){
+            if (!user) {
                 return res.status(400).json({
                     msg: "ID de usuário não encontrado"
                 });
             }
-            
-            UserModel.destroy({where: {user_id: user_id}})
+
+            UserModel.destroy({ where: { user_id: user_id } })
 
             return res.status(200).json({
                 msg: 'Usuário deletado com sucesso!'
             });
 
-        }catch(error){
+        } catch (error) {
             console.log(error);
             return res.status(400).json({
                 error: error.message
@@ -168,20 +194,26 @@ class UserController {
         }
     }
 
-    async uploadPhoto(req, res){
-        if(!req.file.originalname || !req.file.buffer){
+    async uploadPhoto(req, res) {
+        if (!req.file.originalname || !req.file.buffer) {
             console.log("Parâmetros da imagem insuficientes!");
             return res.status(400).json({
                 msg: "Parâmetros da imagem insuficientes!"
             });
         }
 
+        const fileName = `${req.user_data.user_id}.png`;
+
+        const fileBuffer = await sharp(req.file.buffer)
+                                    .png()
+                                    .toBuffer();
+
         const statusFileUploaded = await BucketService.uploadFile(
             "controle-vencimentos",
-            `photos/${req.file.originalname}`,
-            req.file.buffer);
+            `userPhotos/${fileName}`,
+            fileBuffer);
 
-        if(!statusFileUploaded){
+        if (!statusFileUploaded) {
             return res.status(400).json({
                 msg: "Erro no envio do arquivo"
             });

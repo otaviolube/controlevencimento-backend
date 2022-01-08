@@ -34,20 +34,20 @@ class AuthMiddleware{
             }
             
             req.user_data = {
+                user_id: decoded.user_id,
                 user_name: decoded.user_name,
                 user_email: decoded.user_email,
                 user_login: decoded.user_login,
                 user_status: decoded.user_status,
                 user_type: decoded.user_type
             }
-    
+  
             return next();
         });
     }
 
     accessControlAdminOnly(req, res, next){
-        console.log(req.user_data)
-        
+       
         if(!req.user_data){
             return res.status(401).json({
                 msg: `Requisição mal formatada!`
