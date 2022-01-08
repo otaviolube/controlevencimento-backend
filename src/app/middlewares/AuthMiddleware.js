@@ -27,9 +27,9 @@ class AuthMiddleware{
        
         jwt.verify(token, AuthConfig.secret, (err, decoded) => {
             if(err){
-                console.log(err)
                 return res.status(401).json({
-                    msg: "Token inválido!"
+                    msg: "Token inválido!",
+                    erro: err.message
                 });
             }
             
