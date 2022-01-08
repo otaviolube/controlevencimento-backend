@@ -1,6 +1,7 @@
 const UserModel = require('../models/UserModel');
 const { v4: uuidv4 } = require('uuid');
 const HashUtils = require('../../utils/HashUtils');
+const BucketService = require('../../services/BucketService');
 class UserController {
     async createUser(req, res) {
         const {
@@ -165,6 +166,24 @@ class UserController {
                 error: error.message
             });
         }
+    }
+
+    async uploadPhoto(req, res){
+        if(!req.file.originalname || !req.file.buffer){
+            console.log("Parâmetros da imagem insuficientes!");
+            return res.status(400).json({
+                msg: "Parâmetros da imagem insuficientes!"
+            });
+        }
+        console.log(req.file.buffer);
+        await BucketService.uploadFile(
+            "controle-vencimentos",
+            `photos/${req.file.originalname}`,
+            req.file.buffer);
+
+        return res.status(201).json({
+            msg: "Arquivo enviado com sucesso!"
+        });
     }
 }
 

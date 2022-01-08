@@ -3,9 +3,6 @@ require('dotenv').config({
 });
 
 const nodemailer = require('nodemailer');
-
-console.log(process.env.MAIL_USER);
-
 class MailService {
     constructor(){
         this.transporter = nodemailer.createTransport({
