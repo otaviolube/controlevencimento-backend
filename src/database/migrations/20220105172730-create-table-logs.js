@@ -7,7 +7,8 @@ module.exports = {
         type: Sequelize.UUID,
         primaryKey: true,
         autoIncrement: false,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       log_event: {
         type: Sequelize.STRING,

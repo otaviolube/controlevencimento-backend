@@ -7,7 +7,8 @@ module.exports = {
         type: Sequelize.UUID,
         primaryKey: true,
         autoIncrement: false,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       user_name: {
         type: Sequelize.STRING,
@@ -19,11 +20,13 @@ module.exports = {
       },
       user_email: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       user_login: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       user_image: {
         type: Sequelize.STRING,
