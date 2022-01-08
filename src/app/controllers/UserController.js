@@ -175,11 +175,17 @@ class UserController {
                 msg: "Parâmetros da imagem insuficientes!"
             });
         }
-        console.log(req.file.buffer);
-        await BucketService.uploadFile(
+
+        const statusFileUploaded = await BucketService.uploadFile(
             "controle-vencimentos",
             `photos/${req.file.originalname}`,
             req.file.buffer);
+
+        if(!statusFileUploaded){
+            return res.status(400).json({
+                msg: "Erro no envio do arquivo"
+            });
+        }
 
         return res.status(201).json({
             msg: "Arquivo enviado com sucesso!"
