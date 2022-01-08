@@ -3,7 +3,6 @@ require('dotenv').config({
 });
 
 const express = require('express');
-
 class AppController {
     constructor(){
         this.express = express();
@@ -11,6 +10,7 @@ class AppController {
         this.database();
         this.middlewares();
         this.routes();
+
     }
 
     database(){
