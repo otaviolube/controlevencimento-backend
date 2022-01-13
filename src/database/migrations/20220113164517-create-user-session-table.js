@@ -11,7 +11,7 @@ module.exports = {
         unique: true
       },
       session_token: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(512),
         primaryKey: false,
         allowNull: false,
         unique: true

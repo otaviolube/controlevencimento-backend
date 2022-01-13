@@ -1,7 +1,10 @@
 const UserModel = require('../models/UserModel');
+const SessionModel = require('../models/SessionModel');
 const { Op } = require('sequelize');
 const HashUtils = require('../../utils/HashUtils');
 const JwtUtils = require('../../utils/JwtUtils');
+const { v4: uuidv4 } = require('uuid');
+
 
 class AuthController {
     
@@ -32,19 +35,56 @@ class AuthController {
                 });
             } else {
                 if (await HashUtils.validateHash(user.user_password, password)) {
-                    console.log('Usuário autenticado com sucesso');
-                    //Criar uma sessão para o usuário
+                                       
+                    const sessionValid = await SessionModel.findOne({
+                        where: {
+                            [Op.and]: [
+                                { user_id: user.user_id },
+                                { session_status: true }
+                            ]
+                        }
+                    });
+
+                    console.log(sessionValid);
+
+                    if(sessionValid){
+                        console.log('Usuário já possui uma sessão válida');
+                        return res.status(200).json({
+                            msg: "Usuário já possui uma sessão válida",
+                            token: sessionValid.session_token
+                        });
+                    }
+
+                    const session_id = uuidv4();
+                    const session_token = JwtUtils.generateToken({
+                        user_id: user.user_id,
+                        user_email: user.user_email,
+                        user_login: user.user_login,
+                        user_status: user.user_status,
+                        user_type: user.user_type,
+                        user_name: user.user_name
+                    });
+
+                    const session = await SessionModel.create({
+                        session_id,
+                        session_token,
+                        session_status: true,
+                        user_id: user.user_id
+                    });
+
+                    if(!session){
+                        console.log('Erro ao criar sessão do usuário!');
+                        return res.status(500).json({
+                            msg: "Erro ao criar sessão do usuário",
+                        });
+                    }
+
                     res.status(200).json({
                         msg: "Usuário autenticado",
-                        token: JwtUtils.generateToken({
-                            user_id: user.user_id,
-                            user_email: user.user_email,
-                            user_login: user.user_login,
-                            user_status: user.user_status,
-                            user_type: user.user_type,
-                            user_name: user.user_name
-                        })
+                        token: session_token
                     });
+
+                    console.log('Usuário autenticado com sucesso');
                 } else {
                     console.log('Erro na autenticação do usuário');
                     res.status(500).json({
