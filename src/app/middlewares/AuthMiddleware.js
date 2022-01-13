@@ -46,6 +46,10 @@ class AuthMiddleware{
         });
     }
 
+    refreshToken(req, res, next){
+
+    }
+
     accessControlAdminOnly(req, res, next){
        
         if(!req.user_data){
@@ -67,8 +71,5 @@ class AuthMiddleware{
 
     }
 }
-
-
-
 
 module.exports = new AuthMiddleware();

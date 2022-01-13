@@ -11,6 +11,8 @@ class AppController {
         this.middlewares();
         this.routes();
 
+        require('./services/MailService').sendTestMail("no-reply@competengenharia.com", "otaviolube@gmail.com", "teste", "teste", "<h1>Teste</h1>");
+
     }
 
     database(){

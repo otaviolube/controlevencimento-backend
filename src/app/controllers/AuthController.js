@@ -4,6 +4,7 @@ const HashUtils = require('../../utils/HashUtils');
 const JwtUtils = require('../../utils/JwtUtils');
 
 class AuthController {
+    
     async login(req, res) {
         const { login, password } = req.body;
 
@@ -32,6 +33,7 @@ class AuthController {
             } else {
                 if (await HashUtils.validateHash(user.user_password, password)) {
                     console.log('Usuário autenticado com sucesso');
+                    //Criar uma sessão para o usuário
                     res.status(200).json({
                         msg: "Usuário autenticado",
                         token: JwtUtils.generateToken({
@@ -61,6 +63,7 @@ class AuthController {
     }
 
     async forget_password() {
+        
 
     }
 }
