@@ -98,7 +98,38 @@ class AuthController {
 
     }
 
-    async logout() {
+    async logout(req, res) {
+
+        const user_id = req.user_data?.user_id;
+
+        if(!user_id){
+            console.log('Parâmetro do usuário não passado');
+            return res.status(500).json({
+                msg: "Parâmetro user_id não encontrado!",
+            });
+        }
+
+        const sessionsValid = await SessionModel.findAll({
+            where: {
+                user_id: user_id
+            }
+        });
+
+        if(sessionsValid.length <= 0){
+            console.log('Nenhuma sessão do usuário encontrada!');
+            return res.status(200).json({
+                msg: "Nenhuma sessão do usuário encontrada",
+            });
+        }
+
+        sessionsValid.forEach(async (session) => {
+            session.session_status = false;
+            await session.save();
+        });
+
+        return res.status(200).json({
+            msg: "Logout realizado com sucesso!",
+        });
 
     }
 

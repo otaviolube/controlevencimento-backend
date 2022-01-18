@@ -1,7 +1,8 @@
 const AuthRoutes = require('express').Router();
 const AuthController = require('../controllers/AuthController');
+const AuthMiddleware = require('../middlewares/AuthMiddleware');
 
 AuthRoutes.post('/login', AuthController.login);
-AuthRoutes.get('/logout', AuthController.logout);
+AuthRoutes.get('/logout', AuthMiddleware.validateToken, AuthController.logout);
 
 module.exports = AuthRoutes;
