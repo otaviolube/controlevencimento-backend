@@ -6,7 +6,8 @@ class LogModel extends Model {
             log_id: DataTypes.UUID,
             log_event: DataTypes.STRING
         }, {
-            sequelize
+            sequelize,
+            tableName: 'logs'
         });
     }
 

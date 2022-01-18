@@ -4,8 +4,6 @@ const { Op } = require('sequelize');
 const HashUtils = require('../../utils/HashUtils');
 const JwtUtils = require('../../utils/JwtUtils');
 const { v4: uuidv4 } = require('uuid');
-
-
 class AuthController {
     
     async login(req, res) {
