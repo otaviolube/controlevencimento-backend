@@ -7,6 +7,7 @@ const CompanyRoutes = require('./CompanyRoutes');
 const ItemRoutes = require('./ItemRoutes');
 const SubitemRoutes = require('./SubitemRoutes');
 const ClientRoutes = require('./ClientRoutes');
+const ContractRoutes = require('./ContractRoutes');
 
 module.exports =  app => {
     app.use(UserRoutes);
@@ -18,4 +19,5 @@ module.exports =  app => {
     app.use(ItemRoutes);
     app.use(SubitemRoutes);
     app.use(ClientRoutes);
+    app.use(ContractRoutes);
 }
