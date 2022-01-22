@@ -4,6 +4,7 @@ const AuthRoutes = require('./AuthRoutes');
 const AreaRoutes = require('./AreaRoutes');
 const ColaboratorRoutes = require('./ColaboratorRoutes');
 const CompanyRoutes = require('./CompanyRoutes');
+const ItemRoutes = require('./ItemRoutes');
 
 module.exports =  app => {
     app.use(UserRoutes);
@@ -12,4 +13,5 @@ module.exports =  app => {
     app.use(AreaRoutes);
     app.use(ColaboratorRoutes);
     app.use(CompanyRoutes);
+    app.use(ItemRoutes);
 }
