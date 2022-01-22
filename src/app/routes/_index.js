@@ -5,6 +5,7 @@ const AreaRoutes = require('./AreaRoutes');
 const ColaboratorRoutes = require('./ColaboratorRoutes');
 const CompanyRoutes = require('./CompanyRoutes');
 const ItemRoutes = require('./ItemRoutes');
+const SubitemRoutes = require('./SubitemRoutes');
 
 module.exports =  app => {
     app.use(UserRoutes);
@@ -14,4 +15,5 @@ module.exports =  app => {
     app.use(ColaboratorRoutes);
     app.use(CompanyRoutes);
     app.use(ItemRoutes);
+    app.use(SubitemRoutes);
 }
