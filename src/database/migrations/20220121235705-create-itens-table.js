@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false,
       },
       item_description: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(2048),
         allowNull: true,
       },
       item_red_sign: {
@@ -32,7 +32,7 @@ module.exports = {
       },
       item_status: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
