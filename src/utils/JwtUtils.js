@@ -12,6 +12,19 @@ class JwtUtils {
         });
     }
 
+    async validateToken(token){
+        return new Promise(function(resolve, reject){
+            jwt.verify(token, AuthConfig.secret, (err, decoded) => {
+                if(err){
+                    resolve(null);
+                    console.log(err);
+                }else{
+                    resolve(decoded);
+                }
+            })
+        })
+    }
+
 }
 
 module.exports = new JwtUtils();

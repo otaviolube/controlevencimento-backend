@@ -44,13 +44,21 @@ class AuthController {
                     });
 
                     console.log(sessionValid);
-
+                    
                     if(sessionValid){
-                        console.log('Usuário já possui uma sessão válida');
-                        return res.status(200).json({
-                            msg: "Usuário já possui uma sessão válida",
-                            token: sessionValid.session_token
-                        });
+                        //Vamos converir se o token da sessão já expirou
+                        const tokenOk = await JwtUtils.validateToken(sessionValid.session_token);
+                        if(tokenOk){
+                            console.log('Usuário já possui uma sessão válida');
+                            return res.status(200).json({
+                                msg: "Usuário já possui uma sessão válida",
+                                token: sessionValid.session_token
+                            });
+                        }else{
+                            //Preciso invalidar o token na sessão
+                            sessionValid.session_status = false;
+                            await sessionValid.save();
+                        }
                     }
 
                     const session_id = uuidv4();
@@ -109,13 +117,16 @@ class AuthController {
 
         const sessionsValid = await SessionModel.findAll({
             where: {
-                user_id: user_id
+                [Op.and]: [
+                    { user_id: user_id },
+                    { session_status: true }
+                ]
             }
         });
 
         if(sessionsValid.length <= 0){
             console.log('Nenhuma sessão do usuário encontrada!');
-            return res.status(200).json({
+            return res.status(500).json({
                 msg: "Nenhuma sessão do usuário encontrada",
             });
         }
@@ -132,7 +143,37 @@ class AuthController {
     }
 
     async forget_password() {
-        
+        const { email } = req.body;
+
+        try {
+            const user = await UserModel.findOne({
+                where: {
+                    user_email: email
+                }
+            });
+
+            if (!user) {
+                console.log('Usuário não encontrado');
+                res.status(400).json({
+                    msg: "Usuário não encontrado",
+                });
+            }
+
+            const reset_token = HashUtils.generateRandomToken();
+
+            const token_expiration = new Date();
+            token_expiration.setHours(now.getHours() + 1);
+
+
+
+
+        }catch(error){
+            res.status(400).send({ msg: "Erro ao resetar a senha do usuário. Tente novamente!"} );
+        }
+    }
+
+    async reset_password(){
+        //Reseta a senha
 
     }
 }

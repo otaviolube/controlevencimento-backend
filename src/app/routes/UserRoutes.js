@@ -5,7 +5,7 @@ const multer = require('multer');
 
 UserRoutes.post('/user', AuthMiddleware.validateToken, AuthMiddleware.accessControlAdminOnly, UserController.createUser); //Create
 UserRoutes.get('/user/:id', AuthMiddleware.validateToken, UserController.showUser);
-UserRoutes.get('/user', AuthMiddleware.validateToken, AuthMiddleware.accessControlAdminOnly, UserController.listUsers); //Read
+UserRoutes.get('/users', AuthMiddleware.validateToken, AuthMiddleware.accessControlAdminOnly, UserController.listUsers); //Read
 UserRoutes.patch('/user/:id', AuthMiddleware.validateToken, AuthMiddleware.accessControlAdminOnly, UserController.changeUser); //Update
 UserRoutes.delete('/user/:id', AuthMiddleware.validateToken, AuthMiddleware.accessControlAdminOnly, UserController.deleteUser); //Delete
 

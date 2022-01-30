@@ -7,6 +7,7 @@ const SessionModel = require('../app/models/SessionModel');
 const AreaModel = require('../app/models/AreaModel');
 const ColaboratorModel = require('../app/models/ColaboratorModel');
 const CompanyModel = require('../app/models/CompanyModel');
+const ResetTokenModel = require('../app/models/ResetToken');
 
 const connection = new Sequelize(DatabaseConfig);
 
@@ -16,11 +17,13 @@ SessionModel.init(connection);
 AreaModel.init(connection);
 ColaboratorModel.init(connection);
 CompanyModel.init(connection);
+ResetTokenModel.init(connection);
 
 LogModel.associate(connection.models);
 SessionModel.associate(connection.models);
 AreaModel.associate(connection.models);
 ColaboratorModel.associate(connection.models);
 CompanyModel.associate(connection.models);
+ResetTokenModel.associate(connection.models);
 
 module.exports = connection;

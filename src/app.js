@@ -3,6 +3,7 @@ require('dotenv').config({
 });
 
 const express = require('express');
+const cors = require('cors');
 class AppController {
     constructor(){
         this.express = express();
@@ -18,6 +19,7 @@ class AppController {
 
     middlewares(){
         this.express.use(express.json());
+        this.express.use(cors());
     }
 
     routes(){
