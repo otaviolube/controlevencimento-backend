@@ -24,8 +24,10 @@ class CompanyModel extends Model {
     }
 
     static associate(models){
-        this.belongsToMany(models.ColaboratorModel, { foreignKey: 'company_id', through: 'companies_colaborators', as: 'colaborators'});
+        this.belongsToMany(models.ColaboratorModel, { foreignKey: 'company_id', through: models.CompaniesColaboratorsModel, as: 'colaborators'});
+        this.hasMany(models.ClientModel, { foreignKey: 'company_id', as: 'clients'});
     }
+
 }
 
 module.exports = CompanyModel;

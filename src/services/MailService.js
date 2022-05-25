@@ -4,8 +4,9 @@ require('dotenv').config({
 
 const nodemailer = require('nodemailer');
 class MailService {
-    
-    constructor(){
+
+    constructor() {
+
         this.transporter = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
             port: process.env.MAIL_PORT,
@@ -16,28 +17,28 @@ class MailService {
             },
             tls: { rejectUnauthorized: false }
         });
+
     }
-    
-    async sendMail(from, to, subject, text, html){
-        try{
+
+    async sendMail(from, to, subject, html) {
+        try {
             let info = await this.transporter.sendMail({
                 from: from,
                 to: to,
                 subject: subject,
-                text: text,
                 html: html
             });
             console.log("Message sent: %s", info.messageId);
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     }
-    
-    async sendTestMail(from, to, subject, text, html){
+
+    async sendTestMail(from, to, subject, html) {
 
         const testAccount = await nodemailer.createTestAccount();
-        
+
         let transporter = nodemailer.createTransport({
             host: "smtp.ethereal.email",
             port: 587,
@@ -48,17 +49,16 @@ class MailService {
             },
         });
 
-        try{
+        try {
             let info = await transporter.sendMail({
                 from: from,
                 to: to,
                 subject: subject,
-                text: text,
                 html: html
             });
+
             console.log("Message sent: %s", info.messageId);
-            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     }

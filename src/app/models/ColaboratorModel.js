@@ -40,8 +40,8 @@ class ColaboratorModel extends Model {
     }
 
     static associate(models){
-        this.belongsToMany(models.AreaModel, { foreignKey: 'colaborator_id', through: 'areas_colaborators', as: 'areas'});
-        this.belongsToMany(models.CompanyModel, { foreignKey: 'colaborator_id', through: 'companies_colaborators', as: 'companies'});
+        this.belongsToMany(models.AreaModel, { foreignKey: 'colaborator_id', through: models.AreasColaboratorsModel, as: 'areas'});
+        this.belongsToMany(models.CompanyModel, { foreignKey: 'colaborator_id', through: models.CompaniesColaboratorsModel, as: 'companies'});
     }
 }
 

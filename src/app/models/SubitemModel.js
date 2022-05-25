@@ -17,6 +17,18 @@ class SubitemModel extends Model {
                 type: DataTypes.STRING(2048),
                 allowNull: true
             },
+            subitem_red_sign: {
+                type: DataTypes.INTEGER,
+                allowNull: true
+            },
+            subitem_yellow_sign: {
+                type: DataTypes.INTEGER,
+                allowNull: true
+            },
+            subitem_green_sign: {
+                type: DataTypes.INTEGER,
+                allowNull: true
+            },
             subitem_status: {
                 type: DataTypes.STRING,
                 allowNull: false
@@ -28,7 +40,7 @@ class SubitemModel extends Model {
     }
 
     static associate(models){
-        this.belongsTo(models.ItemModel, { foreignKey: 'item_id', as: 'items-subitems'});
+        this.belongsTo(models.ItemModel, { foreignKey: 'item_id', as: 'item'});
     }
 }
 

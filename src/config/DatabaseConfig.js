@@ -9,8 +9,9 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
+    logging: true,
     define: {
         timestamps: true,
-        underscored: true
+        underscored: true,
     }
 }

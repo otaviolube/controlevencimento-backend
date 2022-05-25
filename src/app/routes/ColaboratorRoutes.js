@@ -5,7 +5,7 @@ const AuthMiddleware = require('../middlewares/AuthMiddleware');
 
 ColaboratorRoutes.get('/colaborators', AuthMiddleware.validateToken, ColaboratorController.getAllColaborators);
 ColaboratorRoutes.get('/colaborator/:id', AuthMiddleware.validateToken, ColaboratorController.getColaborator);
-ColaboratorRoutes.post('/colaborators', AuthMiddleware.validateToken, ColaboratorController.createColaborator);
+ColaboratorRoutes.post('/colaborator', AuthMiddleware.validateToken, ColaboratorController.createColaborator);
 ColaboratorRoutes.patch('/colaborator/:id', AuthMiddleware.validateToken, ColaboratorController.updateColaborator);
 ColaboratorRoutes.delete('/colaborator/:id', AuthMiddleware.validateToken, ColaboratorController.deleteColaborator);
 

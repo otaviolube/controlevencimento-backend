@@ -1,10 +1,107 @@
 const UserModel = require('../models/UserModel');
+const ResetTokenModel = require('../models/ResetToken');
+const MailService = require('../../services/MailService');
+const MailUtils = require('../../utils/MailUtils');
 const { v4: uuidv4 } = require('uuid');
 const HashUtils = require('../../utils/HashUtils');
 const BucketService = require('../../services/BucketService');
 const sharp = require('sharp');
 
 class UserController {
+
+    async createUserAndNotify(req, res) {
+        const {
+            user_name,
+            user_email,
+            user_login,
+            user_type,
+            user_status } = req.body;
+
+        //Vamos criar uma senha aleatória, uma vez que a mesma é obrigatória no BD
+        const user_password_hash = await HashUtils.generateHash(HashUtils.generateRandomToken());
+
+        try {
+            const usersNumber = await UserModel.count({
+                where: {
+                    user_email
+                }
+            });
+
+            if (usersNumber > 0) {
+                return res.status(401).json({
+                    msg: `Email já existe na base de dados`
+                });
+            }
+
+            const user_id = uuidv4();
+            const user = await UserModel.create({
+                user_id,
+                user_name,
+                user_password: user_password_hash,
+                user_email,
+                user_login,
+                user_type,
+                user_status
+            });
+
+            //Mandar email para o usuário informando a sua inserção no sistema
+            //Mandar um link para o usuário trocar a senha
+            //Senão orientá-lo que ele pode resetar a senha
+
+            const token = HashUtils.generateRandomToken();
+
+            const token_expiration = new Date();
+            token_expiration.setHours(token_expiration.getHours() + 1);
+
+            const reset_token_id = uuidv4();
+
+            const reset_token = await ResetTokenModel.create({
+                reset_token_id: reset_token_id,
+                reset_token: token,
+                reset_token_status: "created",
+                reset_token_expiration: token_expiration,
+                user_id: user.user_id
+            });
+
+            if (!reset_token) {
+                console.log('Erro ao criar reset token do usuário');
+                return res.status(500).json({
+                    msg: "Erro ao criar token para reset de senha",
+                });
+            }
+
+            const mailSended = await MailService.sendMail(
+                "no-reply@competengenharia.com",
+                user_email,
+                "Controle de Vencimentos - Mudança de senha requisitada",
+                MailUtils.getMailTemplate("email", {
+                    user_name: user.user_name,
+                    user_id: reset_token.user_id,
+                    reset_token: reset_token.reset_token
+                }),
+            )
+
+            console.log(mailSended);
+
+            return res.status(200).json({
+                msg: 'Usuário inserido com sucesso e email de confirmação enviado!',
+                user: {
+                    user_id: user.user_id,
+                    user_name: user.user_name,
+                    user_email: user.user_email,
+                    user_login: user.user_login,
+                    user_type: user.user_type,
+                    user_status: user.user_status
+                }
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: error.message
+            });
+        }
+    }
+
     async createUser(req, res) {
         const {
             user_name,
@@ -72,7 +169,7 @@ class UserController {
                     msg: "ID de usuário não encontrado"
                 });
             }
-            const usersData = {
+            const userData = {
                 user_id: user.user_id,
                 user_name: user.user_name,
                 user_email: user.user_email,
@@ -85,7 +182,7 @@ class UserController {
             }
             return res.status(200).json({
                 msg: "Usuário encontrado com sucesso.",
-                users: usersData
+                user: userData
             });
         } catch (error) {
             console.log(error);

@@ -13,18 +13,18 @@ class ClientModel extends Model {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            subitem_status: {
+            client_status: {
                 type: DataTypes.STRING,
                 allowNull: false
             }
         }, {
             sequelize, 
-            tableName: 'subitems'
+            tableName: 'clients'
         });
     }
 
     static associate(models){
-        this.belongsTo(models.CompanyModel, { foreignKey: 'company_id', as: 'clients-companies'});
+        this.belongsTo(models.CompanyModel, { foreignKey: 'company_id', as: 'company'});
     }
 }
 

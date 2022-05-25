@@ -18,15 +18,15 @@ class ItemModel extends Model {
                 allowNull: true
             },
             item_red_sign: {
-                type: DataTypes.BOOLEAN,
-                allowNull: true
+                type: DataTypes.INTEGER,
+                allowNull: false
             },
             item_yellow_sign: {
-                type: DataTypes.BOOLEAN,
-                allowNull: true
+                type: DataTypes.INTEGER,
+                allowNull: false
             },
             item_green_sign: {
-                type: DataTypes.BOOLEAN,
+                type: DataTypes.INTEGER,
                 allowNull: true
             },
             item_status: {
@@ -37,6 +37,10 @@ class ItemModel extends Model {
             sequelize, 
             tableName: 'items'
         });
+    }
+
+    static associate(models){
+        this.hasMany(models.SubitemModel, { foreignKey: 'item_id', as: 'subitems'});
     }
 }
 

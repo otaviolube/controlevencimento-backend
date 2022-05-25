@@ -4,8 +4,8 @@ const AuthMiddleware = require('../middlewares/AuthMiddleware');
 
 
 AreaRoutes.get('/areas', AuthMiddleware.validateToken, AreaController.getAllAreas);
-AreaRoutes.get('/areas/:id', AuthMiddleware.validateToken, AreaController.getArea);
-AreaRoutes.post('/areas', AuthMiddleware.validateToken, AreaController.createArea);
+AreaRoutes.get('/area/:id', AuthMiddleware.validateToken, AreaController.getArea);
+AreaRoutes.post('/area', AuthMiddleware.validateToken, AreaController.createArea);
 AreaRoutes.patch('/area/:id', AuthMiddleware.validateToken, AreaController.updateArea);
 AreaRoutes.delete('/area/:id', AuthMiddleware.validateToken, AreaController.deleteArea);
 

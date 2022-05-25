@@ -28,7 +28,7 @@ class AreaModel extends Model {
     }
 
     static associate(models){
-        this.belongsToMany(models.ColaboratorModel, { foreignKey: 'area_id', through: 'areas_colaborators', as: 'colaborators'});
+        this.belongsToMany(models.ColaboratorModel, { foreignKey: 'area_id', through: models.AreasColaboratorsModel, as: 'colaborators'});
     }
 }
 
